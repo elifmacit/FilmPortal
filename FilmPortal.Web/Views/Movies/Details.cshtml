@@ -1,0 +1,12 @@
+﻿@model FilmPortal.Core.Entities.Movie
+
+<h1>Film Detayları</h1>
+
+<div>
+    <h2>@Model.Title</h2>
+    <p><strong>Açıklama:</strong> @Model.Description</p>
+    <p><strong>Puan:</strong> @Model.ImdbRating</p>
+    <p><strong>Yayın Tarihi:</strong> @Model.ReleaseDate.ToString("dd/MM/yyyy")</p>
+</div>
+
+<a href="@Url.Action("Index", "Film")" class="btn btn-secondary">Geri Dön</a>

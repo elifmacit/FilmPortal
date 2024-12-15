@@ -1,0 +1,94 @@
+﻿@model IEnumerable<FilmPortal.Core.Entities.Category>
+@{
+    Layout = string.Empty;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movies App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/movies/css/movies.css" rel="stylesheet" />
+    <script src="~/movies/js/movies.js"></script>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Movies App</a>
+            <div class="search-bar">
+                <input type="text"
+                       id="searchInput"
+                       class="form-control"
+                       placeholder="Film ara..." />
+            </div>
+            <div class="profile-section">
+                <span id="userName"><a href="@Url.Action("Login", "Auth")">Giriş Yap / Üye Ol</a></span>
+                <img src="images/profile-icon.png" alt="Profil" />
+            </div>
+        </div>
+    </nav>
+
+    <div id="searchResults" class="container my-2"></div>
+
+    <div id="imdbCarousel" class="carousel slide my-4" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @foreach (var movie in ViewBag.movies)
+            {
+                <div class="carousel-item active">
+                    <img src="images/image1.png" class="d-block w-100" alt="@movie.Title" />
+                    <div class="carousel-caption">
+                        <h5>@movie.Title</h5>
+                        <p>IMDB Puanı: @movie.ImdbRating</p>
+                    </div>
+                </div>
+            }
+           
+        </div>
+        <button class="carousel-control-prev"
+                type="button"
+                data-bs-target="#imdbCarousel"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Önceki</span>
+        </button>
+        <button class="carousel-control-next"
+                type="button"
+                data-bs-target="#imdbCarousel"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Sonraki</span>
+        </button>
+    </div>
+    @foreach (var category in Model)
+    {
+        <div class="container my-4">
+            <h3 class="category-title">@category.Name</h3>
+            <div class="film-row">
+                <button class="arrow left" onclick="TurnLeft(this)">&#8249;</button>
+                <div class="film-slider">
+
+                    @foreach (var movie in category.MovieCategories.Select(x=>x.Movie))
+                    {
+                        <div class="card" onclick="navigateToFilmDetail(1)">
+                            <img src="images/image1.png" class="card-img-top" alt="@movie.Title" />
+                            <div class="card-body">
+                                <h5 class="card-title">@movie.Title</h5>
+                                <p class="card-text">IMDB Puanı: @movie.ImdbRating</p>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <button class="arrow right" onclick="TurnRight(this)">&#8250;</button>
+            </div>
+        </div>
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
+
